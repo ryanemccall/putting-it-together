@@ -1,10 +1,14 @@
 import { Component } from "react";
 
-export class BalanceView extends Component {
+type BalanceViewProps = {
+    balance: number 
+}
+export class BalanceView extends Component<BalanceViewProps, {}> {
     render() {
+        const { balance } = this.props
         return(
             <>
-            Balance View Comp 
+            { balance } 
             </>
         )
     }
