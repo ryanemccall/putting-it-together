@@ -1,19 +1,29 @@
-import { Component } from "react";
-import { TransactionHistory } from "./TransactionHistory";
+import React, { FormEventHandler } from 'react'
 
 type TransactionFormProps = {
-    handleSubmit(amount: number): void
+  handleSubmit(amount: number): void
 }
-export class TransactionForm extends Component <TransactionFormProps, {}> {
-    render() {
-        const { handleSubmit } = this.props
+type TransactionFormState = {
+  amount: number
+}
+// React.Component<Props, State>
+export class TransactionForm extends React.Component<TransactionFormProps, TransactionFormState> {
+  state = {
+    amount: 0
+  }
 
-        return(
-            <form onSubmit={(e) => {
-                e.preventDefault()
-                handleSubmit(100)}}>
-                <button>Submit</button>
-            </form>
-        )
-    }
+  submitTransaction = (e:React.FormEvent) => {
+        e.preventDefault()
+        this.props.handleSubmit(this.state.amount)
+  }
+
+  render() {
+    return (
+      <form onSubmit={ this.submitTransaction }>
+        <input onChange={(e: React.ChangeEvent<HTMLInputElement>) => {this.setState({ amount: +e.currentTarget.value})}} type="number"></input>
+
+        <button>Submit</button>
+      </form>
+    )
+  }
 }
